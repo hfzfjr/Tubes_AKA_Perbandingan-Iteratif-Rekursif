@@ -150,7 +150,7 @@ async function runAnalysis() {
         algorithmBadge.className = `algorithm-badge ${algorithm}`;
         algorithmDescription.textContent = algorithm === "iterative" 
             ? "Menggunakan loop untuk konversi karakter per karakter" 
-            : "Menggunakan fungsi rekursif untuk konversi (tanpa batasan karakter)";
+            : "Menggunakan fungsi rekursif untuk konversi";
         timeResult.textContent = data.execution_time_ms;
         memoryResult.textContent = data.memory_usage_kb;
         resultStringPreview.textContent = data.output;
