@@ -2,36 +2,22 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import random
 import time
-import sys
 import os
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
-# Helper function to generate string based on pattern
 def generate_string(n, pattern='mixed'):
-    """
-    Generate a random string of length n based on pattern
-    Patterns: 'mixed', 'lower', 'upper'
-    """
     if pattern == 'lower':
         chars = 'abcdefghijklmnopqrstuvwxyz'
     elif pattern == 'upper':
         chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    else:  # mixed
+    else:
         chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-    
     return ''.join(random.choice(chars) for _ in range(n))
 
-# New conversion function based on pattern and direction
 def convert_case(text, pattern, direction=None):
-    """
-    Convert case based on pattern:
-    - 'lower': convert to uppercase
-    - 'upper': convert to lowercase
-    - 'mixed': convert based on direction ('to_upper' or 'to_lower')
-    """
     if pattern == 'lower':
         return text.upper()
     elif pattern == 'upper':
@@ -44,17 +30,13 @@ def convert_case(text, pattern, direction=None):
         elif direction == 'swap':
             return text.swapcase()
         else:
-            return text  # Default: no change if direction invalid
+            return text
     else:
-        return text  # Default: no change
+        return text
 
-# Measure memory usage (approximate)
 def measure_memory_usage(text):
-    # Approximate memory usage in bytes
-    # In Python, strings are more complex, but this gives a rough estimate
-    return (len(text.encode('utf-8')) + 56) / 1024  # Convert to KB
+    return (len(text.encode('utf-8')) + 56) / 1024
 
-# API Routes
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -65,8 +47,7 @@ def generate_string_api():
         data = request.get_json()
         n = data.get('n', 100)
         pattern = data.get('pattern', 'mixed')
-        
-        # No size limit
+   
         if n < 1:
             return jsonify({'error': 'n must be greater than 0'}), 400
         
@@ -89,28 +70,24 @@ def analyze():
         data = request.get_json()
         text = data.get('text', '')
         algorithm = data.get('algorithm', 'iterative')
-        pattern = data.get('pattern', 'mixed')  # New: pattern from frontend
-        direction = data.get('direction', None)  # New: direction for mixed
+        pattern = data.get('pattern', 'mixed')
+        direction = data.get('direction', None)
         
         if not text:
             return jsonify({'error': 'Text is required'}), 400
-        
-        # Measure execution time
+
         start_time = time.perf_counter()
         
         if algorithm == 'iterative':
             result = convert_case(text, pattern, direction)
         elif algorithm == 'recursive':
-            # For recursive, we can implement a simple recursive version if needed, but since conversion is straightforward, use iterative for now
-            # To keep it recursive, we can add a recursive wrapper, but for simplicity, use the same logic
-            result = convert_case(text, pattern, direction)  # No recursion needed for simple conversion
+            result = convert_case(text, pattern, direction)
         else:
             return jsonify({'error': 'Invalid algorithm'}), 400
         
         end_time = time.perf_counter()
-        execution_time = (end_time - start_time) * 1000  # Convert to milliseconds
+        execution_time = (end_time - start_time) * 1000
         
-        # Measure memory usage
         memory_usage = measure_memory_usage(result)
         
         return jsonify({
@@ -142,8 +119,7 @@ def test():
     })
 
 if __name__ == '__main__':
-    # Create templates directory if it doesn't exist
     if not os.path.exists('templates'):
         os.makedirs('templates')
-    
+
     app.run(debug=True, port=5000)

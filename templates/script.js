@@ -1,7 +1,4 @@
-// API Base URL
 const API_BASE_URL = "http://localhost:5000/api";
-
-// DOM Elements
 const stringCountInput = document.getElementById("stringCount");
 const patternSelect = document.getElementById("pattern");
 const conversionOptions = document.getElementById("conversionOptions");
@@ -23,12 +20,10 @@ const resultStringPreview = document.getElementById("resultStringPreview");
 const resultLength = document.getElementById("resultLength");
 const timestamp = document.getElementById("timestamp");
 
-// Current string data
 let currentString = "";
 let currentPattern = "mixed";
 let currentLength = 0;
 
-// Show/hide error message
 function showError(message) {
     errorMessage.textContent = message;
     errorMessage.style.display = "block";
@@ -38,7 +33,6 @@ function hideError() {
     errorMessage.style.display = "none";
 }
 
-// Show/hide loading
 function showLoading() {
     loading.style.display = "block";
     runButton.disabled = true;
@@ -47,10 +41,9 @@ function showLoading() {
 
 function hideLoading() {
     loading.style.display = "none";
-    runButton.disabled = false;  // Keep enabled after first run to allow re-analysis
+    runButton.disabled = false;
 }
 
-// Toggle conversion options based on pattern
 function updateConversionOptions() {
     if (patternSelect.value === "mixed") {
         conversionOptions.style.display = "block";
@@ -59,7 +52,6 @@ function updateConversionOptions() {
     }
 }
 
-// Generate string via API
 async function generateString() {
     const n = parseInt(stringCountInput.value);
     const pattern = patternSelect.value;
@@ -89,19 +81,16 @@ async function generateString() {
             throw new Error(data.error || "Failed to generate string");
         }
 
-        // Update UI
         currentString = data.string;
         currentLength = data.length;
-        currentPattern = data.pattern;  // Store pattern for analysis
+        currentPattern = data.pattern;
 
         stringPreview.textContent = currentString;
         stringLength.textContent = currentLength;
         stringPattern.textContent = currentPattern.charAt(0).toUpperCase() + currentPattern.slice(1);
 
-        // Enable run button
         runButton.disabled = false;
 
-        // Hide results if shown
         results.style.display = "none";
 
         hideLoading();
@@ -113,7 +102,6 @@ async function generateString() {
     }
 }
 
-// Run analysis via API
 async function runAnalysis() {
     if (!currentString) {
         showError("Generate string terlebih dahulu");
@@ -121,7 +109,7 @@ async function runAnalysis() {
     }
 
     const algorithm = algorithmSelect.value;
-    const direction = conversionDirection.value;  // For mixed pattern
+    const direction = conversionDirection.value;
 
     showLoading();
 
@@ -134,8 +122,8 @@ async function runAnalysis() {
             body: JSON.stringify({
                 text: currentString,
                 algorithm: algorithm,
-                pattern: currentPattern,  // Send stored pattern
-                direction: direction,     // Send direction for mixed
+                pattern: currentPattern,
+                direction: direction,
             }),
         });
 
@@ -145,7 +133,6 @@ async function runAnalysis() {
             throw new Error(data.error || "Failed to analyze");
         }
 
-        // Update results UI
         algorithmBadge.textContent = algorithm === "iterative" ? "Iteratif" : "Rekursif";
         algorithmBadge.className = `algorithm-badge ${algorithm}`;
         algorithmDescription.textContent = algorithm === "iterative" 
@@ -157,7 +144,6 @@ async function runAnalysis() {
         resultLength.textContent = data.output_length;
         timestamp.textContent = new Date(data.timestamp).toLocaleString();
 
-        // Show results
         results.style.display = "block";
 
         hideLoading();
@@ -169,17 +155,9 @@ async function runAnalysis() {
     }
 }
 
-// Event listeners
 document.addEventListener("DOMContentLoaded", function() {
-    // Initial setup
     updateConversionOptions();
-    
-    // Pattern change
     patternSelect.addEventListener("change", updateConversionOptions);
-    
-    // Generate button
     generateButton.addEventListener("click", generateString);
-    
-    // Run button
     runButton.addEventListener("click", runAnalysis);
 });
