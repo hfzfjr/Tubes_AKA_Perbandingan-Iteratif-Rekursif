@@ -1,7 +1,7 @@
 # Analisis Kompleksitas Algoritma (Iteratif vs Rekursif)
 
 Aplikasi web sederhana untuk **membandingkan waktu eksekusi** dan **estimasi penggunaan memori** pada proses **konversi huruf besar-kecil** di sebuah string, dengan pilihan algoritma **iteratif** dan **rekursif**.  
-Frontend dibuat dengan HTML/CSS/JS, backend menggunakan **Flask** yang menyediakan API untuk generate string dan analisis.
+Frontend dibuat dengan HTML/CSS/JS, backend menggunakan **Python** yang menyediakan API untuk generate string dan analisis.
 
 ## Fitur
 
@@ -15,7 +15,7 @@ Frontend dibuat dengan HTML/CSS/JS, backend menggunakan **Flask** yang menyediak
     - `swap` (tukar besar↔kecil)
 - Menampilkan:
   - waktu eksekusi (ms) dari backend
-  - estimasi memori (KB) (estimasi sederhana berbasis ukuran bytes string)
+  - estimasi penggunaan memori (KB)
 
 ## Struktur Proyek
 
@@ -55,5 +55,4 @@ Frontend dibuat dengan HTML/CSS/JS, backend menggunakan **Flask** yang menyediak
    ```
 
 4. Pastikan API hidup:
-   - Buka `http://localhost:5000/api/test`  
-     Harusnya mengembalikan JSON status `ok`.
+   - Buka `http://localhost:5000/api/test`
