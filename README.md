@@ -1,9 +1,10 @@
 # Analisis Kompleksitas Algoritma (Iteratif vs Rekursif)
 
-Aplikasi web sederhana untuk **membandingkan waktu eksekusi** dan **estimasi penggunaan memori** pada proses **konversi huruf besar-kecil** di sebuah string, dengan pilihan algoritma **iteratif** dan **rekursif** (di UI).  
+Aplikasi web sederhana untuk **membandingkan waktu eksekusi** dan **estimasi penggunaan memori** pada proses **konversi huruf besar-kecil** di sebuah string, dengan pilihan algoritma **iteratif** dan **rekursif**.  
 Frontend dibuat dengan HTML/CSS/JS, backend menggunakan **Flask** yang menyediakan API untuk generate string dan analisis.
 
 ## Fitur
+
 - Generate string acak dengan panjang `n`.
 - Pilih pola string:
   - `lower` (huruf kecil saja) → dikonversi ke UPPERCASE
@@ -17,6 +18,7 @@ Frontend dibuat dengan HTML/CSS/JS, backend menggunakan **Flask** yang menyediak
   - estimasi memori (KB) (estimasi sederhana berbasis ukuran bytes string)
 
 ## Struktur Proyek
+
 - `templates/index.html` — tampilan utama aplikasi
 - `templates/style.css` — styling UI
 - `templates/script.js` — logic frontend, memanggil API backend
@@ -24,11 +26,14 @@ Frontend dibuat dengan HTML/CSS/JS, backend menggunakan **Flask** yang menyediak
 - `requirements.txt` — dependensi Python
 
 ## Prasyarat
+
 - Python 3.9+ (disarankan)
 - Browser modern (Chrome/Firefox/Edge)
 
 ## Cara Menjalankan (Backend / API)
+
 1. Buat virtual environment:
+
    ```bash
    python -m venv .venv
    # Windows:
@@ -38,11 +43,13 @@ Frontend dibuat dengan HTML/CSS/JS, backend menggunakan **Flask** yang menyediak
    ```
 
 2. Install dependensi:
+
    ```bash
    pip install -r requirements.txt
    ```
 
 3. Jalankan server Flask:
+
    ```bash
    python app.py
    ```
