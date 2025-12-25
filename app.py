@@ -3,10 +3,13 @@ from flask_cors import CORS
 import random
 import time
 import os
+import sys
 from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
+
+sys.setrecursionlimit(1000000000)
 
 def generate_string(n, pattern='mixed'):
     if pattern == 'lower':
@@ -17,22 +20,49 @@ def generate_string(n, pattern='mixed'):
         chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
     return ''.join(random.choice(chars) for _ in range(n))
 
-def convert_case(text, pattern, direction=None):
+def convert_case_iterative(text, pattern, direction=None):
+    result_chars = []
+    
+    for char in text:
+        if pattern == 'lower':
+            result_chars.append(char.upper())
+        elif pattern == 'upper':
+            result_chars.append(char.lower())
+        elif pattern == 'mixed':
+            if direction == 'to_upper':
+                result_chars.append(char.upper())
+            elif direction == 'to_lower':
+                result_chars.append(char.lower())
+            elif direction == 'swap':
+                result_chars.append(char.swapcase())
+            else:
+                result_chars.append(char)
+        else:
+            result_chars.append(char)
+    
+    return ''.join(result_chars)
+
+def convert_case_recursive(text, pattern, direction=None, index=0):
+    if index >= len(text):
+        return ""
+    
+    char = text[index]
+    
     if pattern == 'lower':
-        return text.upper()
+        converted_char = char.upper()
     elif pattern == 'upper':
-        return text.lower()
+        converted_char = char.lower()
     elif pattern == 'mixed':
         if direction == 'to_upper':
-            return text.upper()
+            converted_char = char.upper()
         elif direction == 'to_lower':
-            return text.lower()
+            converted_char = char.lower()
         elif direction == 'swap':
-            return text.swapcase()
+            converted_char = char.swapcase()
         else:
-            return text
-    else:
-        return text
+            converted_char = char
+    
+    return converted_char + convert_case_recursive(text, pattern, direction, index + 1)
 
 def measure_memory_usage(text):
     return (len(text.encode('utf-8')) + 56) / 1024
@@ -79,9 +109,9 @@ def analyze():
         start_time = time.perf_counter()
         
         if algorithm == 'iterative':
-            result = convert_case(text, pattern, direction)
+            result = convert_case_iterative(text, pattern, direction)
         elif algorithm == 'recursive':
-            result = convert_case(text, pattern, direction)
+            result = convert_case_recursive(text, pattern, direction)
         else:
             return jsonify({'error': 'Invalid algorithm'}), 400
         
@@ -105,7 +135,6 @@ def analyze():
     except RecursionError:
         return jsonify({
             'error': 'Recursion depth exceeded. Try iterative algorithm.',
-            'max_recommended_length': 1000
         }), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 500
