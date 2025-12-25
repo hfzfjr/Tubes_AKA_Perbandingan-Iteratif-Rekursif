@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analisis Kompleksitas Algoritma</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Analisis Kompleksitas Algoritma</h1>
+        <p>
+          Analisis Perbandingan Kompleksitas Algoritma Iteratif dan Rekursif
+          dalam Mengubah Huruf Besar-Kecil pada String
+        </p>
+      </header>
+
+      <div class="main-card">
+        <div class="input-group">
+          <label for="stringCount">Jumlah Karakter String (n):</label>
+          <input
+            type="number"
+            id="stringCount"
+            min="1"
+            value="100"
+            placeholder="Masukkan jumlah karakter (tidak ada batasan)"
+          />
+          <small style="color: #7f8c8d; margin-top: 5px; display: block"
+            >Tidak ada batasan ukuran string - gunakan dengan bijak</small
+          >
+        </div>
+
+        <div class="pattern-row">
+          <div class="pattern-group">
+            <label for="pattern">Pola String:</label>
+            <select id="pattern">
+              <option value="mixed">Campuran (Mixed)</option>
+              <option value="lower">Huruf Kecil Saja</option>
+              <option value="upper">Huruf Besar Saja</option>
+            </select>
+          </div>
+        </div>
+
+        <div
+          class="conversion-options"
+          id="conversionOptions"
+          style="display: none"
+        >
+          <label>Arah Konversi untuk Campuran:</label>
+          <select id="conversionDirection">
+            <option value="to_upper">Konversi ke Huruf Besar Semua</option>
+            <option value="to_lower">Konversi ke Huruf Kecil Semua</option>
+            <option value="swap">Swap (Tukar Huruf Besar-Kecil)</option>
+          </select>
+        </div>
+
+        <button class="generate-button" id="generateButton">
+          Generate String
+        </button>
+
+        <div class="string-preview-container">
+          <h4>String yang Digenerate:</h4>
+          <div class="string-preview" id="stringPreview">
+            Klik "Generate String" untuk membuat string acak
+          </div>
+          <div class="string-info">
+            <span>Panjang: <span id="stringLength">0</span> karakter</span>
+            <span>Pola: <span id="stringPattern">-</span></span>
+          </div>
+        </div>
+
+        <div class="algorithm-selection">
+          <h3>Pilih Algoritma:</h3>
+          <select class="algorithm-select" id="algorithm">
+            <option value="iterative">Iteratif (Loop)</option>
+            <option value="recursive">Rekursif</option>
+          </select>
+        </div>
+
+        <button class="run-button" id="runButton" disabled>
+          Jalankan Analisis
+        </button>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="loading" id="loading">
+          <div class="loader"></div>
+          <p>Memproses algoritma...</p>
+        </div>
+
+        <div class="results" id="results">
+          <h3>Hasil Analisis</h3>
+          <div class="result-grid">
+            <div class="result-card">
+              <h4>Algoritma</h4>
+              <div>
+                <span class="algorithm-badge" id="algorithmBadge">-</span>
+                <p
+                  style="margin-top: 10px; font-size: 0.9rem; color: #7f8c8d"
+                  id="algorithmDescription"
+                ></p>
+              </div>
+            </div>
+            <div class="result-card">
+              <h4>Waktu Eksekusi</h4>
+              <div>
+                <span class="result-value" id="timeResult">-</span>
+                <span class="result-unit">ms</span>
+              </div>
+              <p style="margin-top: 10px; font-size: 0.9rem; color: #7f8c8d">
+                Diukur dengan precision counter
+              </p>
+            </div>
+            <div class="result-card">
+              <h4>Penggunaan Memori</h4>
+              <div>
+                <span class="result-value" id="memoryResult">-</span>
+                <span class="result-unit">KB</span>
+              </div>
+              <p style="margin-top: 10px; font-size: 0.9rem; color: #7f8c8d">
+                Estimasi penggunaan memori
+              </p>
+            </div>
+          </div>
+          <div class="string-preview-container">
+            <h4>String Hasil:</h4>
+            <div class="string-preview" id="resultStringPreview">-</div>
+            <div class="string-info">
+              <span>Panjang: <span id="resultLength">0</span> karakter</span>
+              <span>Waktu: <span id="timestamp">-</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
