@@ -83,6 +83,14 @@ body {
     min-width: 200px;
 }
 
+.pattern-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
 .pattern-group select {
     width: 100%;
     padding: 12px;
@@ -107,6 +115,7 @@ body {
     margin-bottom: 8px;
     font-weight: 600;
     color: #2c3e50;
+    font-size: 1rem;
 }
 
 .conversion-options select {
@@ -147,8 +156,11 @@ body {
 }
 
 .algorithm-selection h3 {
-    margin-bottom: 15px;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
     color: #2c3e50;
+    font-size: 1rem;
 }
 
 .algorithm-select {
@@ -194,8 +206,11 @@ body {
 }
 
 .string-preview-container h4 {
-    margin-bottom: 10px;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
     color: #2c3e50;
+    font-size: 1rem;
 }
 
 .string-preview {
